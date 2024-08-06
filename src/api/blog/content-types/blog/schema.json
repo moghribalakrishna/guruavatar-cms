@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blogs",
+  "info": {
+    "singularName": "blog",
+    "pluralName": "blogs",
+    "displayName": "Blog",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Excerpt": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "blocks"
+    },
+    "PublishDate": {
+      "type": "date"
+    }
+  }
+}
