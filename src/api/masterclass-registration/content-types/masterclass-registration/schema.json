@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "masterclass_registrations",
+  "info": {
+    "singularName": "masterclass-registration",
+    "pluralName": "masterclass-registrations",
+    "displayName": "Masterclass Registration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Email": {
+      "type": "email",
+      "required": true
+    },
+    "Phone": {
+      "type": "string",
+      "required": true
+    },
+    "Occupation": {
+      "type": "string",
+      "required": true
+    },
+    "Experience": {
+      "type": "string",
+      "required": true
+    },
+    "Expectations": {
+      "type": "richtext"
+    }
+  }
+}

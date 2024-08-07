@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_suggestions",
+  "info": {
+    "singularName": "course-suggestion",
+    "pluralName": "course-suggestions",
+    "displayName": "Course Suggestion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Email": {
+      "type": "email",
+      "required": true
+    },
+    "CourseTitle": {
+      "type": "string",
+      "required": true
+    },
+    "CourseDescription": {
+      "type": "string",
+      "required": true
+    },
+    "TargetAudience": {
+      "type": "string",
+      "required": true
+    },
+    "SubmissionDate": {
+      "type": "date"
+    }
+  }
+}
