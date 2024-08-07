@@ -4,34 +4,35 @@
   "info": {
     "singularName": "course-suggestion",
     "pluralName": "course-suggestions",
-    "displayName": "Course Suggestion"
+    "displayName": "Course Suggestion",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "Email": {
+    "email": {
       "type": "email",
       "required": true
     },
-    "CourseTitle": {
+    "courseTitle": {
       "type": "string",
       "required": true
     },
-    "CourseDescription": {
+    "courseDescription": {
       "type": "string",
       "required": true
     },
-    "TargetAudience": {
+    "targetAudience": {
       "type": "string",
       "required": true
     },
-    "SubmissionDate": {
+    "submissionDate": {
       "type": "date"
     }
   }

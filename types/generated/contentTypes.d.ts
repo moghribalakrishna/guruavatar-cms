@@ -695,7 +695,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -724,6 +723,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    interests: Attribute.JSON;
+    educationLevel: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -800,10 +801,10 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Title: Attribute.String;
-    Excerpt: Attribute.String;
-    Content: Attribute.Blocks;
-    PublishDate: Attribute.Date;
+    title: Attribute.String;
+    excerpt: Attribute.String;
+    content: Attribute.Blocks;
+    publishDate: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -821,15 +822,16 @@ export interface ApiContactFormSubmissionContactFormSubmission
     singularName: 'contact-form-submission';
     pluralName: 'contact-form-submissions';
     displayName: 'Contact Form Submission';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required;
-    Email: Attribute.Email & Attribute.Required;
-    Subject: Attribute.String & Attribute.Required;
-    Message: Attribute.RichText & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    subject: Attribute.String & Attribute.Required;
+    message: Attribute.RichText & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -855,17 +857,18 @@ export interface ApiCourseSuggestionCourseSuggestion
     singularName: 'course-suggestion';
     pluralName: 'course-suggestions';
     displayName: 'Course Suggestion';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required;
-    Email: Attribute.Email & Attribute.Required;
-    CourseTitle: Attribute.String & Attribute.Required;
-    CourseDescription: Attribute.String & Attribute.Required;
-    TargetAudience: Attribute.String & Attribute.Required;
-    SubmissionDate: Attribute.Date;
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    courseTitle: Attribute.String & Attribute.Required;
+    courseDescription: Attribute.String & Attribute.Required;
+    targetAudience: Attribute.String & Attribute.Required;
+    submissionDate: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -891,17 +894,18 @@ export interface ApiMasterclassRegistrationMasterclassRegistration
     singularName: 'masterclass-registration';
     pluralName: 'masterclass-registrations';
     displayName: 'Masterclass Registration';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required;
-    Email: Attribute.Email & Attribute.Required;
-    Phone: Attribute.String & Attribute.Required;
-    Occupation: Attribute.String & Attribute.Required;
-    Experience: Attribute.String & Attribute.Required;
-    Expectations: Attribute.RichText;
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    phone: Attribute.String & Attribute.Required;
+    occupation: Attribute.String & Attribute.Required;
+    experience: Attribute.String & Attribute.Required;
+    expectations: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -927,13 +931,14 @@ export interface ApiNewsletterSubscriptionNewsletterSubscription
     singularName: 'newsletter-subscription';
     pluralName: 'newsletter-subscriptions';
     displayName: 'Newsletter Subscription';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Email: Attribute.Email & Attribute.Required & Attribute.Unique;
-    SubscribeDate: Attribute.Date;
+    email: Attribute.Email & Attribute.Required & Attribute.Unique;
+    subscribeDate: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -945,6 +950,42 @@ export interface ApiNewsletterSubscriptionNewsletterSubscription
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::newsletter-subscription.newsletter-subscription',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVolunteerVolunteer extends Schema.CollectionType {
+  collectionName: 'volunteers';
+  info: {
+    singularName: 'volunteer';
+    pluralName: 'volunteers';
+    displayName: 'Volunteer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email & Attribute.Required;
+    phone: Attribute.String;
+    interests: Attribute.JSON;
+    experience: Attribute.String & Attribute.Required;
+    availability: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::volunteer.volunteer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::volunteer.volunteer',
       'oneToOne',
       'admin::user'
     > &
@@ -975,6 +1016,7 @@ declare module '@strapi/types' {
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;
+      'api::volunteer.volunteer': ApiVolunteerVolunteer;
     }
   }
 }

@@ -12,16 +12,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Excerpt": {
+    "excerpt": {
       "type": "string"
     },
-    "Content": {
+    "content": {
       "type": "blocks"
     },
-    "PublishDate": {
+    "publishDate": {
       "type": "date"
     }
   }

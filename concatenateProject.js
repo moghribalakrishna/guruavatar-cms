@@ -9,7 +9,7 @@ function concatenateDirectory(sourceDir, outputPath, outputFormat) {
   const excludePaths = ['node_modules', '.cache', 'build', 'public', '.git', 'concatenateProject.js', 'guruavatar-cms.js', 'package-lock.json', 'yarn.lock', 'extensions'];
 
   // Include only these file extensions
-  const includeExtensions = ['.js', '.json', '.md'];
+  const includeExtensions = ['.js', '.json', '.md','.env'];
 
   function processDirectory(currentPath, relativePath = '') {
     try {

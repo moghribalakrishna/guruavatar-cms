@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "contact_form_submissions",
+  "collectionName": "volunteers",
   "info": {
-    "singularName": "contact-form-submission",
-    "pluralName": "contact-form-submissions",
-    "displayName": "Contact Form Submission",
+    "singularName": "volunteer",
+    "pluralName": "volunteers",
+    "displayName": "Volunteer",
     "description": ""
   },
   "options": {
@@ -13,19 +13,24 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "email": {
       "type": "email",
       "required": true
     },
-    "subject": {
+    "phone": {
+      "type": "string"
+    },
+    "interests": {
+      "type": "json"
+    },
+    "experience": {
       "type": "string",
       "required": true
     },
-    "message": {
-      "type": "richtext",
+    "availability": {
+      "type": "string",
       "required": true
     }
   }

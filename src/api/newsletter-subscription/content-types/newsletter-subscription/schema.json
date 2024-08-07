@@ -4,19 +4,20 @@
   "info": {
     "singularName": "newsletter-subscription",
     "pluralName": "newsletter-subscriptions",
-    "displayName": "Newsletter Subscription"
+    "displayName": "Newsletter Subscription",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Email": {
+    "email": {
       "type": "email",
       "required": true,
       "unique": true
     },
-    "SubscribeDate": {
+    "subscribeDate": {
       "type": "date"
     }
   }

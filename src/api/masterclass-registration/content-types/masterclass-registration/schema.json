@@ -4,34 +4,35 @@
   "info": {
     "singularName": "masterclass-registration",
     "pluralName": "masterclass-registrations",
-    "displayName": "Masterclass Registration"
+    "displayName": "Masterclass Registration",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "Email": {
+    "email": {
       "type": "email",
       "required": true
     },
-    "Phone": {
+    "phone": {
       "type": "string",
       "required": true
     },
-    "Occupation": {
+    "occupation": {
       "type": "string",
       "required": true
     },
-    "Experience": {
+    "experience": {
       "type": "string",
       "required": true
     },
-    "Expectations": {
+    "expectations": {
       "type": "richtext"
     }
   }
