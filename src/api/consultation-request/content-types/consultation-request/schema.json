@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "consultation_requests",
+  "info": {
+    "singularName": "consultation-request",
+    "pluralName": "consultation-requests",
+    "displayName": "Consultation Request"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "preferredDate": {
+      "type": "datetime"
+    },
+    "message": {
+      "type": "richtext"
+    }
+  }
+}

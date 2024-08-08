@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mindfulness_community_signups",
+  "info": {
+    "singularName": "mindfulness-community-signup",
+    "pluralName": "mindfulness-community-signups",
+    "displayName": "Mindfulness Community Signup"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "interests": {
+      "type": "json"
+    }
+  }
+}

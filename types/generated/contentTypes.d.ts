@@ -815,6 +815,41 @@ export interface ApiBlogBlog extends Schema.CollectionType {
   };
 }
 
+export interface ApiConsultationRequestConsultationRequest
+  extends Schema.CollectionType {
+  collectionName: 'consultation_requests';
+  info: {
+    singularName: 'consultation-request';
+    pluralName: 'consultation-requests';
+    displayName: 'Consultation Request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    preferredDate: Attribute.DateTime;
+    message: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::consultation-request.consultation-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::consultation-request.consultation-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiContactFormSubmissionContactFormSubmission
   extends Schema.CollectionType {
   collectionName: 'contact_form_submissions';
@@ -924,6 +959,39 @@ export interface ApiMasterclassRegistrationMasterclassRegistration
   };
 }
 
+export interface ApiMindfulnessCommunitySignupMindfulnessCommunitySignup
+  extends Schema.CollectionType {
+  collectionName: 'mindfulness_community_signups';
+  info: {
+    singularName: 'mindfulness-community-signup';
+    pluralName: 'mindfulness-community-signups';
+    displayName: 'Mindfulness Community Signup';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    interests: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mindfulness-community-signup.mindfulness-community-signup',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mindfulness-community-signup.mindfulness-community-signup',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiNewsletterSubscriptionNewsletterSubscription
   extends Schema.CollectionType {
   collectionName: 'newsletter_subscriptions';
@@ -1012,9 +1080,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::blog.blog': ApiBlogBlog;
+      'api::consultation-request.consultation-request': ApiConsultationRequestConsultationRequest;
       'api::contact-form-submission.contact-form-submission': ApiContactFormSubmissionContactFormSubmission;
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
+      'api::mindfulness-community-signup.mindfulness-community-signup': ApiMindfulnessCommunitySignupMindfulnessCommunitySignup;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
     }
