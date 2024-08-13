@@ -46,7 +46,7 @@ const executeCommand = (command) => {
   });
 };
 
-const zipProject = (source, out) => {
+const zipChangedFiles = (source, out) => {
   const archive = archiver('zip', { zlib: { level: 9 } });
   const stream = fs.createWriteStream(out);
   return new Promise((resolve, reject) => {
@@ -78,23 +78,6 @@ async function ensureNodeVersion(ssh) {
     console.log(`Node.js version ${nodeVersion} installed successfully.`);
   } catch (error) {
     console.error(`Failed to ensure Node.js version ${nodeVersion}:`, error);
-    throw error;
-  }
-}
-
-async function ensureStrapiInstalled(ssh) {
-  try {
-    console.log('Checking for Strapi installation...');
-    const { stdout: strapiCheck } = await sshExecute('strapi version');
-    if (!strapiCheck) {
-      console.log('Strapi not found. Installing Strapi...');
-      await sshExecute('npm install -g @strapi/strapi');
-      console.log('Strapi installed successfully.');
-    } else {
-      console.log('Strapi is already installed:', strapiCheck);
-    }
-  } catch (error) {
-    console.error('Failed to ensure Strapi is installed:', error);
     throw error;
   }
 }
@@ -152,12 +135,27 @@ async function sshExecute(command, options = {}) {
   });
 }
 
+async function updateRemoteProject(ssh, localZip, remoteDir) {
+  await ssh.putFile(localZip, `${remoteDir}/update.zip`);
+  await sshExecute(`
+    cd ${remoteDir} &&
+    unzip -o update.zip -d . &&
+    rm update.zip
+  `);
+}
+
+async function updateDependencies(ssh, remoteDir) {
+  const loadNvmCommand = `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh" && nvm use ${nodeVersion}`;
+  await sshExecute(`
+    cd ${remoteDir} &&
+    ${loadNvmCommand} &&
+    npm install --only=prod
+  `);
+}
+
 async function deploy() {
   try {
     validateEnvironment();
-
-    console.log('Checking local dependencies...');
-    await executeCommand('npm ci --only=prod');
 
     console.log('Building Strapi project...');
     const buildResult = await executeCommand('NODE_ENV=production npm run build');
@@ -165,8 +163,8 @@ async function deploy() {
       console.warn('Build process completed with warnings:', buildResult.stderr);
     }
 
-    console.log('Zipping the project directory (excluding unnecessary files)...');
-    await zipProject('.', 'strapi-project.zip');
+    console.log('Zipping changed files...');
+    await zipChangedFiles('.', 'strapi-update.zip');
 
     await sshConnect();
 
@@ -178,38 +176,21 @@ async function deploy() {
 
     await backupDatabase(ssh);
     await ensureNodeVersion(ssh);
-    await ensureStrapiInstalled(ssh);
 
-    console.log('Ensuring npm is up to date...');
-    const loadNvmCommand = `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh" && nvm use ${nodeVersion}`;
-    await sshExecute(`${loadNvmCommand} && npm install -g npm@latest`);
+    console.log('Updating remote project...');
+    await updateRemoteProject(ssh, 'strapi-update.zip', remoteDir);
 
-    console.log('Transferring files...');
-    await retryOperation(async () => {
-      await ssh.putFile('strapi-project.zip', `${remoteDir}/strapi-project.zip`);
-      console.log('strapi-project.zip transferred successfully');
-    });
-
-    console.log('Unzipping and setting up the Strapi project...');
-    const setupCommands = `
-      cd ${remoteDir} &&
-      unzip -o strapi-project.zip -d . &&
-      rm strapi-project.zip &&
-      ${loadNvmCommand} &&
-      npm ci --only=prod
-    `;
-    await sshExecute(setupCommands, { cwd: remoteDir });
+    console.log('Updating dependencies if necessary...');
+    await updateDependencies(ssh, remoteDir);
 
     await setCorrectPermissions(ssh);
 
-    console.log('Starting the Strapi application with PM2...');
+    console.log('Restarting the Strapi application with PM2...');
     const startCommands = `
       export PATH=$PATH:/usr/local/bin:$(npm bin -g) &&
-      pm2 stop strapi-app || true &&
-      pm2 delete strapi-app || true &&
-      NODE_ENV=production pm2 start npm --name "strapi-app" -- run start
+      pm2 restart strapi-app || pm2 start npm --name "strapi-app" -- run start
     `;
-    await sshExecute(`${loadNvmCommand} && ${startCommands}`, { cwd: remoteDir });
+    await sshExecute(startCommands, { cwd: remoteDir });
 
     console.log('Deployment completed successfully!');
   } catch (error) {
@@ -233,7 +214,7 @@ async function deploy() {
 
     // Clean up local zip files
     try {
-      if (fs.existsSync('strapi-project.zip')) await fsp.unlink('strapi-project.zip');
+      if (fs.existsSync('strapi-update.zip')) await fsp.unlink('strapi-update.zip');
     } catch (cleanupError) {
       console.error('Error cleaning up local zip files:', cleanupError);
     }
