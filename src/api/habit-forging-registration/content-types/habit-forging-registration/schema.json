@@ -1,0 +1,37 @@
+{
+    "kind": "collectionType",
+    "collectionName": "habit_forging_registrations",
+    "info": {
+      "singularName": "habit-forging-registration",
+      "pluralName": "habit-forging-registrations",
+      "displayName": "Habit Forging Registration"
+    },
+    "options": {
+      "draftAndPublish": true
+    },
+    "attributes": {
+      "name": {
+        "type": "string",
+        "required": true
+      },
+      "email": {
+        "type": "email",
+        "required": true
+      },
+      "phone": {
+        "type": "string",
+        "required": true
+      },
+      "selectedHabits": {
+        "type": "json",
+        "required": true
+      },
+      "preferredStartDate": {
+        "type": "date",
+        "required": true
+      },
+      "goals": {
+        "type": "text"
+      }
+    }
+  }

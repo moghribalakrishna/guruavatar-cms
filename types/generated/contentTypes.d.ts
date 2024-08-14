@@ -923,6 +923,42 @@ export interface ApiCourseSuggestionCourseSuggestion
   };
 }
 
+export interface ApiHabitForgingRegistrationHabitForgingRegistration
+  extends Schema.CollectionType {
+  collectionName: 'habit_forging_registrations';
+  info: {
+    singularName: 'habit-forging-registration';
+    pluralName: 'habit-forging-registrations';
+    displayName: 'Habit Forging Registration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    phone: Attribute.String & Attribute.Required;
+    selectedHabits: Attribute.JSON & Attribute.Required;
+    preferredStartDate: Attribute.Date & Attribute.Required;
+    goals: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::habit-forging-registration.habit-forging-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::habit-forging-registration.habit-forging-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMasterclassRegistrationMasterclassRegistration
   extends Schema.CollectionType {
   collectionName: 'masterclass_registrations';
@@ -1084,6 +1120,7 @@ declare module '@strapi/types' {
       'api::consultation-request.consultation-request': ApiConsultationRequestConsultationRequest;
       'api::contact-form-submission.contact-form-submission': ApiContactFormSubmissionContactFormSubmission;
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
+      'api::habit-forging-registration.habit-forging-registration': ApiHabitForgingRegistrationHabitForgingRegistration;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
       'api::mindfulness-community-signup.mindfulness-community-signup': ApiMindfulnessCommunitySignupMindfulnessCommunitySignup;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;
