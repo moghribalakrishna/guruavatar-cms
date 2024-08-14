@@ -996,6 +996,43 @@ export interface ApiMasterclassRegistrationMasterclassRegistration
   };
 }
 
+export interface ApiMentorApplicationMentorApplication
+  extends Schema.CollectionType {
+  collectionName: 'mentor_applications';
+  info: {
+    singularName: 'mentor-application';
+    pluralName: 'mentor-applications';
+    displayName: 'Mentor Application';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    expertise: Attribute.RichText;
+    experience: Attribute.RichText;
+    motivation: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mentor-application.mentor-application',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mentor-application.mentor-application',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMindfulnessCommunitySignupMindfulnessCommunitySignup
   extends Schema.CollectionType {
   collectionName: 'mindfulness_community_signups';
@@ -1122,6 +1159,7 @@ declare module '@strapi/types' {
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
       'api::habit-forging-registration.habit-forging-registration': ApiHabitForgingRegistrationHabitForgingRegistration;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
+      'api::mentor-application.mentor-application': ApiMentorApplicationMentorApplication;
       'api::mindfulness-community-signup.mindfulness-community-signup': ApiMindfulnessCommunitySignupMindfulnessCommunitySignup;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
