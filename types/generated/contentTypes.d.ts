@@ -867,6 +867,7 @@ export interface ApiContactFormSubmissionContactFormSubmission
     email: Attribute.Email & Attribute.Required;
     subject: Attribute.String & Attribute.Required;
     message: Attribute.RichText & Attribute.Required;
+    phone: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
