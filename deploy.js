@@ -23,7 +23,7 @@ function validateEnvironment() {
       throw new Error(`${envVar} is not set in the environment variables.`);
     }
   }
-  
+
   if (!fs.existsSync(path.resolve(process.cwd(), 'package.json'))) {
     throw new Error('package.json not found. Are you in the correct directory?');
   }
@@ -57,10 +57,11 @@ const zipChangedFiles = (source, out) => {
           'node_modules/**',
           '.cache/**',
           '.tmp/**',
-          'build/**',
           '*.zip',
           '.env',
-          '.git/**'
+          '.git/**',
+          '**/data/**',           // Exclude database files
+          '**/config/env/**',     // Exclude environment-specific configurations
         ]
       })
       .on('error', err => reject(err))
@@ -90,12 +91,6 @@ async function checkDiskSpace(ssh) {
   }
 }
 
-async function backupDatabase(ssh) {
-  // This is a placeholder. Implement according to your database setup.
-  console.log('Backing up database...');
-  // await sshExecute('pg_dump strapidb > strapidb_backup.sql');
-}
-
 async function setCorrectPermissions(ssh) {
   await sshExecute(`chown -R ${config.username}:${config.username} ${remoteDir}`);
   await sshExecute(`chmod -R 755 ${remoteDir}`);
@@ -119,7 +114,7 @@ async function sshConnect() {
     await ssh.connect({
       ...config,
       tryKeyboard: true,
-      readyTimeout: 30000, // Increase timeout to 30 seconds
+      readyTimeout: 30000,
     });
     console.log('Connected successfully.');
   });
@@ -140,7 +135,8 @@ async function updateRemoteProject(ssh, localZip, remoteDir) {
   await sshExecute(`
     cd ${remoteDir} &&
     unzip -o update.zip -d . &&
-    rm update.zip
+    rm update.zip &&
+    NODE_ENV=production npm run build
   `);
 }
 
@@ -149,7 +145,8 @@ async function updateDependencies(ssh, remoteDir) {
   await sshExecute(`
     cd ${remoteDir} &&
     ${loadNvmCommand} &&
-    npm install --only=prod
+    npm install --only=prod &&
+    npm rebuild
   `);
 }
 
@@ -158,10 +155,7 @@ async function deploy() {
     validateEnvironment();
 
     console.log('Building Strapi project...');
-    const buildResult = await executeCommand('NODE_ENV=production npm run build');
-    if (buildResult.stderr) {
-      console.warn('Build process completed with warnings:', buildResult.stderr);
-    }
+    await executeCommand('NODE_ENV=production npm run build');
 
     console.log('Zipping changed files...');
     await zipChangedFiles('.', 'strapi-update.zip');
@@ -174,7 +168,6 @@ async function deploy() {
     const backupCommand = `cp -R ${remoteDir} ${remoteDir}_backup_$(date +%Y%m%d_%H%M%S)`;
     await sshExecute(backupCommand);
 
-    await backupDatabase(ssh);
     await ensureNodeVersion(ssh);
 
     console.log('Updating remote project...');
@@ -188,7 +181,7 @@ async function deploy() {
     console.log('Restarting the Strapi application with PM2...');
     const startCommands = `
       export PATH=$PATH:/usr/local/bin:$(npm bin -g) &&
-      pm2 restart strapi-app || pm2 start npm --name "strapi-app" -- run start
+      pm2 restart strapi-app || pm2 start npm --name "strapi-app" -- run start:prod
     `;
     await sshExecute(startCommands, { cwd: remoteDir });
 
@@ -199,7 +192,6 @@ async function deploy() {
       console.log('Attempting rollback...');
       try {
         await sshExecute(`rm -rf ${remoteDir} && mv ${remoteDir}_backup_* ${remoteDir}`);
-        // Here you would also restore the database from the backup
         console.log('Rollback completed.');
       } catch (rollbackError) {
         console.error('Rollback failed:', rollbackError);
