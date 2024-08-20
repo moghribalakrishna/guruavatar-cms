@@ -114,3 +114,5 @@ build
 .strapi-updater.json
 .strapi-cloud.json
 guruavatar-cms.js
+.env-dev
+.env-production
