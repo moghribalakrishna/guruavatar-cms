@@ -13,7 +13,7 @@ function concatenateDirectory(sourceDir, outputPath, outputFormat) {
   const includeExtensions = new Set(['.js', '.json', '.md', '.env']);
 
   // Directories specific to Strapi
-  const directoriesToProcess = ['api', 'components', 'config', 'extensions'];
+  const directoriesToProcess = ['src', 'config', 'extensions'];
 
   function processDirectory(currentPath, relativePath = '', depth = 0) {
     try {
