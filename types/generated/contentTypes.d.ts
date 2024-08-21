@@ -923,6 +923,40 @@ export interface ApiCourseSuggestionCourseSuggestion
   };
 }
 
+export interface ApiDonationIntentDonationIntent extends Schema.CollectionType {
+  collectionName: 'donation_intents';
+  info: {
+    singularName: 'donation-intent';
+    pluralName: 'donation-intents';
+    displayName: 'donation-intent';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    message: Attribute.Blocks;
+    amount: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::donation-intent.donation-intent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::donation-intent.donation-intent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiHabitForgingRegistrationHabitForgingRegistration
   extends Schema.CollectionType {
   collectionName: 'habit_forging_registrations';
@@ -1157,6 +1191,7 @@ declare module '@strapi/types' {
       'api::consultation-request.consultation-request': ApiConsultationRequestConsultationRequest;
       'api::contact-form-submission.contact-form-submission': ApiContactFormSubmissionContactFormSubmission;
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
+      'api::donation-intent.donation-intent': ApiDonationIntentDonationIntent;
       'api::habit-forging-registration.habit-forging-registration': ApiHabitForgingRegistrationHabitForgingRegistration;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
       'api::mentor-application.mentor-application': ApiMentorApplicationMentorApplication;

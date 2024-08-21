@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_intents",
+  "info": {
+    "singularName": "donation-intent",
+    "pluralName": "donation-intents",
+    "displayName": "donation-intent"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "message": {
+      "type": "blocks"
+    },
+    "amount": {
+      "type": "string"
+    }
+  }
+}
