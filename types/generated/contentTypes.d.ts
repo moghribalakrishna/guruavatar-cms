@@ -886,6 +886,45 @@ export interface ApiContactFormSubmissionContactFormSubmission
   };
 }
 
+export interface ApiCourseRegistrationCourseRegistration
+  extends Schema.CollectionType {
+  collectionName: 'course_registrations';
+  info: {
+    singularName: 'course-registration';
+    pluralName: 'course-registrations';
+    displayName: 'course-registration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    occupation: Attribute.String;
+    courseName: Attribute.String;
+    expectations: Attribute.Blocks;
+    experience: Attribute.String;
+    courseId: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course-registration.course-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course-registration.course-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCourseSuggestionCourseSuggestion
   extends Schema.CollectionType {
   collectionName: 'course_suggestions';
@@ -1190,6 +1229,7 @@ declare module '@strapi/types' {
       'api::blog.blog': ApiBlogBlog;
       'api::consultation-request.consultation-request': ApiConsultationRequestConsultationRequest;
       'api::contact-form-submission.contact-form-submission': ApiContactFormSubmissionContactFormSubmission;
+      'api::course-registration.course-registration': ApiCourseRegistrationCourseRegistration;
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
       'api::donation-intent.donation-intent': ApiDonationIntentDonationIntent;
       'api::habit-forging-registration.habit-forging-registration': ApiHabitForgingRegistrationHabitForgingRegistration;

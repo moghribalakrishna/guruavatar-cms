@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_registrations",
+  "info": {
+    "singularName": "course-registration",
+    "pluralName": "course-registrations",
+    "displayName": "course-registration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "occupation": {
+      "type": "string"
+    },
+    "courseName": {
+      "type": "string"
+    },
+    "expectations": {
+      "type": "blocks"
+    },
+    "experience": {
+      "type": "string"
+    },
+    "courseId": {
+      "type": "string"
+    }
+  }
+}
