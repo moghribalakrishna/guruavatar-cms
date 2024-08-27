@@ -1032,6 +1032,55 @@ export interface ApiHabitForgingRegistrationHabitForgingRegistration
   };
 }
 
+export interface ApiJobsInternshipsRegistrationJobsInternshipsRegistration
+  extends Schema.CollectionType {
+  collectionName: 'jobs_internships_registrations';
+  info: {
+    singularName: 'jobs-internships-registration';
+    pluralName: 'jobs-internships-registrations';
+    displayName: 'jobs-internships-registration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    country: Attribute.String;
+    institution: Attribute.String;
+    courseOfStudy: Attribute.String;
+    graduationYear: Attribute.String;
+    yearsOfExperience: Attribute.String;
+    currentRole: Attribute.String;
+    desiredIndustry: Attribute.String;
+    availableHours: Attribute.String;
+    preferredJobType: Attribute.String;
+    availabilityDate: Attribute.Date;
+    interviewType: Attribute.String;
+    preferredInterviewDate: Attribute.Date;
+    additionalInfo: Attribute.Blocks;
+    formType: Attribute.String;
+    workExperience: Attribute.Blocks;
+    skills: Attribute.Blocks;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::jobs-internships-registration.jobs-internships-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::jobs-internships-registration.jobs-internships-registration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMasterclassRegistrationMasterclassRegistration
   extends Schema.CollectionType {
   collectionName: 'masterclass_registrations';
@@ -1233,6 +1282,7 @@ declare module '@strapi/types' {
       'api::course-suggestion.course-suggestion': ApiCourseSuggestionCourseSuggestion;
       'api::donation-intent.donation-intent': ApiDonationIntentDonationIntent;
       'api::habit-forging-registration.habit-forging-registration': ApiHabitForgingRegistrationHabitForgingRegistration;
+      'api::jobs-internships-registration.jobs-internships-registration': ApiJobsInternshipsRegistrationJobsInternshipsRegistration;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
       'api::mentor-application.mentor-application': ApiMentorApplicationMentorApplication;
       'api::mindfulness-community-signup.mindfulness-community-signup': ApiMindfulnessCommunitySignupMindfulnessCommunitySignup;

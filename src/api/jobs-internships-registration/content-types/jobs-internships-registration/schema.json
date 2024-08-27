@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jobs_internships_registrations",
+  "info": {
+    "singularName": "jobs-internships-registration",
+    "pluralName": "jobs-internships-registrations",
+    "displayName": "jobs-internships-registration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "institution": {
+      "type": "string"
+    },
+    "courseOfStudy": {
+      "type": "string"
+    },
+    "graduationYear": {
+      "type": "string"
+    },
+    "yearsOfExperience": {
+      "type": "string"
+    },
+    "currentRole": {
+      "type": "string"
+    },
+    "desiredIndustry": {
+      "type": "string"
+    },
+    "availableHours": {
+      "type": "string"
+    },
+    "preferredJobType": {
+      "type": "string"
+    },
+    "availabilityDate": {
+      "type": "date"
+    },
+    "interviewType": {
+      "type": "string"
+    },
+    "preferredInterviewDate": {
+      "type": "date"
+    },
+    "additionalInfo": {
+      "type": "blocks"
+    },
+    "formType": {
+      "type": "string"
+    },
+    "workExperience": {
+      "type": "blocks"
+    },
+    "skills": {
+      "type": "blocks"
+    }
+  }
+}
