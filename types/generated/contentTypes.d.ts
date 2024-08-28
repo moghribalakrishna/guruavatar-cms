@@ -904,9 +904,9 @@ export interface ApiCourseRegistrationCourseRegistration
     phone: Attribute.String;
     occupation: Attribute.String;
     courseName: Attribute.String;
-    expectations: Attribute.Blocks;
     experience: Attribute.String;
     courseId: Attribute.String;
+    expectations: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -968,6 +968,7 @@ export interface ApiDonationIntentDonationIntent extends Schema.CollectionType {
     singularName: 'donation-intent';
     pluralName: 'donation-intents';
     displayName: 'donation-intent';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -976,8 +977,8 @@ export interface ApiDonationIntentDonationIntent extends Schema.CollectionType {
     name: Attribute.String;
     email: Attribute.Email;
     phone: Attribute.String;
-    message: Attribute.Blocks;
     amount: Attribute.String;
+    message: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1039,6 +1040,7 @@ export interface ApiJobsInternshipsRegistrationJobsInternshipsRegistration
     singularName: 'jobs-internships-registration';
     pluralName: 'jobs-internships-registrations';
     displayName: 'jobs-internships-registration';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1059,10 +1061,10 @@ export interface ApiJobsInternshipsRegistrationJobsInternshipsRegistration
     availabilityDate: Attribute.Date;
     interviewType: Attribute.String;
     preferredInterviewDate: Attribute.Date;
-    additionalInfo: Attribute.Blocks;
     formType: Attribute.String;
-    workExperience: Attribute.Blocks;
-    skills: Attribute.Blocks;
+    additionalInfo: Attribute.RichText;
+    workExperience: Attribute.RichText;
+    skills: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1148,6 +1150,43 @@ export interface ApiMentorApplicationMentorApplication
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::mentor-application.mentor-application',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMentorshipRequestMentorshipRequest
+  extends Schema.CollectionType {
+  collectionName: 'mentorship_requests';
+  info: {
+    singularName: 'mentorship-request';
+    pluralName: 'mentorship-requests';
+    displayName: 'Mentorship Request';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    mentorName: Attribute.String;
+    Status: Attribute.String;
+    message: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mentorship-request.mentorship-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mentorship-request.mentorship-request',
       'oneToOne',
       'admin::user'
     > &
@@ -1285,6 +1324,7 @@ declare module '@strapi/types' {
       'api::jobs-internships-registration.jobs-internships-registration': ApiJobsInternshipsRegistrationJobsInternshipsRegistration;
       'api::masterclass-registration.masterclass-registration': ApiMasterclassRegistrationMasterclassRegistration;
       'api::mentor-application.mentor-application': ApiMentorApplicationMentorApplication;
+      'api::mentorship-request.mentorship-request': ApiMentorshipRequestMentorshipRequest;
       'api::mindfulness-community-signup.mindfulness-community-signup': ApiMindfulnessCommunitySignupMindfulnessCommunitySignup;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;

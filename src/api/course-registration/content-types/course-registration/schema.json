@@ -27,14 +27,14 @@
     "courseName": {
       "type": "string"
     },
-    "expectations": {
-      "type": "blocks"
-    },
     "experience": {
       "type": "string"
     },
     "courseId": {
       "type": "string"
+    },
+    "expectations": {
+      "type": "richtext"
     }
   }
 }

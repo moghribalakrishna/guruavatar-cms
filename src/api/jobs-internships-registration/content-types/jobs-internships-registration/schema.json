@@ -4,7 +4,8 @@
   "info": {
     "singularName": "jobs-internships-registration",
     "pluralName": "jobs-internships-registrations",
-    "displayName": "jobs-internships-registration"
+    "displayName": "jobs-internships-registration",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -56,17 +57,17 @@
     "preferredInterviewDate": {
       "type": "date"
     },
-    "additionalInfo": {
-      "type": "blocks"
-    },
     "formType": {
       "type": "string"
     },
+    "additionalInfo": {
+      "type": "richtext"
+    },
     "workExperience": {
-      "type": "blocks"
+      "type": "richtext"
     },
     "skills": {
-      "type": "blocks"
+      "type": "richtext"
     }
   }
 }

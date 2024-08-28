@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "donation_intents",
+  "collectionName": "mentorship_requests",
   "info": {
-    "singularName": "donation-intent",
-    "pluralName": "donation-intents",
-    "displayName": "donation-intent",
+    "singularName": "mentorship-request",
+    "pluralName": "mentorship-requests",
+    "displayName": "Mentorship Request",
     "description": ""
   },
   "options": {
@@ -21,7 +21,10 @@
     "phone": {
       "type": "string"
     },
-    "amount": {
+    "mentorName": {
+      "type": "string"
+    },
+    "Status": {
       "type": "string"
     },
     "message": {
